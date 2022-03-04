@@ -1,13 +1,13 @@
 'use strict';
-let descriptionId = '.item-description';
+const descriptionBlockClass = '.item-description';
+const descriptionBlock = document.querySelector(descriptionBlockClass);
 
-if (document.querySelector(descriptionId) != null) {
+if (descriptionBlock != null) {
         //расширение отработает только если на странице обнаружиться блок .item-description с описанием объявления
-        let description = document.querySelector(descriptionId).textContent;
-
-        let infBlockId = '.title-info-actions-item';//блок, куда мы будем вставлять свою иконку оригинальности
-        let infBlock = document.querySelector(infBlockId);
-        let fakeMarkers = [
+        const descriptionText = document.querySelector(descriptionBlockClass).textContent;
+        const targetBlockClass = '.title-info-actions-item';//блок, куда мы будем вставлять свою иконку оригинальности
+        const targetBlock = document.querySelector(targetBlockClass);
+        const fakeMarkers = [
                 "копия",
                 "люкс",
                 "lux",
@@ -17,12 +17,12 @@ if (document.querySelector(descriptionId) != null) {
                 "качеств(о|а|ом|е) (premium|премиум|максимальн(ым|ое)|топ|🔥|(наи)?лучш(ее|ем)|отличн(ое|ого|ым)|высок(ое|ого|им)|хорош(ее|его|им)|заводск(ого|ое|им)|оригиналь(ное|ного|ным))"
         ];
 
-        let originalMarkers = [
+        const originalMarkers = [
                 "оригинал[^а-я]",
                 "состояни(е|и)"
         ];
 
-        let alarmMarkers = [
+        const alarmMarkers = [
                 "premium",
                 "премиум",
                 "[a-z][а-я]|[а-я][a-z]",
@@ -34,17 +34,17 @@ if (document.querySelector(descriptionId) != null) {
 
 
         //собираем наши регулярки для анализа текста объявления
-        let regFake = new RegExp(fakeMarkers.join("|"), "gi");
-        let regOrigin = new RegExp(originalMarkers.join("|"), "gi");
-        let regAlarm = new RegExp(alarmMarkers.join("|"), "gi");
-        let fakeStatus = null;
+        const regFake = new RegExp(fakeMarkers.join("|"), "gi");
+        const regOrigin = new RegExp(originalMarkers.join("|"), "gi");
+        const regAlarm = new RegExp(alarmMarkers.join("|"), "gi");
 
-        if (regOrigin.test(description)) {fakeStatus=0; console.log(fakeStatus);}
-        if (regAlarm.test(description)) {fakeStatus=1; console.log(fakeStatus);}
-        if (regFake.test(description)) {fakeStatus=2; console.log(fakeStatus);}
+        let fakeStatus = null;
+        if (regOrigin.test(descriptionText)) {fakeStatus=0; console.log(fakeStatus);}
+        if (regAlarm.test(descriptionText)) {fakeStatus=1; console.log(fakeStatus);}
+        if (regFake.test(descriptionText)) {fakeStatus=2; console.log(fakeStatus);}
 
         //добавляем на страницу нашу иконку оригинальности
-        let banner = document.createElement('div');
+        const banner = document.createElement('div');
         banner.style.display = "flex";
         banner.style.alignItems = "center";
         banner.style.marginLeft = "auto";
@@ -66,6 +66,6 @@ if (document.querySelector(descriptionId) != null) {
         }
 
 
-        infBlock.append(banner);
+        targetBlock.append(banner);
 
 }
